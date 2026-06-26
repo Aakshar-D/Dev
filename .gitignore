@@ -1,0 +1,3 @@
+# Tooling caches / local state
+.memsearch/
+.playwright-mcp/
