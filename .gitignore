@@ -1,3 +1,6 @@
 # Tooling caches / local state
 .memsearch/
 .playwright-mcp/
+
+# Local MCP config (contains access token)
+.mcp.json

@@ -46,7 +46,7 @@ All real integration logic lives in **Supabase Edge Functions** (`linkedalliance
 | `gmail-oauth-start` | Initiates OAuth flow (returns redirect URL) |
 | `gmail-oauth-callback` | Handles OAuth callback; stores encrypted tokens in `email_connections` |
 | `gmail-disconnect` | Revokes token and removes `email_connections` row |
-| `gmail-create-draft` | Creates a draft in user's Gmail Drafts |
+| `gmail-create-draft` | BDR — creates a draft in the user's active mailbox. **Provider-aware**: Gmail or Outlook depending on the connection (see Microsoft section) |
 | `gmail-create-draft-expansion` | Client Expansion desk — creates outreach draft |
 | `gmail-create-draft-ssg-status` | SSG desk — creates status-update draft |
 | `prep-sync-calendar` | Syncs Google Calendar for Daily Prepper (−30d to +7d window) → `prep_calendar_events` |
@@ -129,12 +129,36 @@ The integration uses the task assignee's email as the routing key to look up the
 
 ---
 
-## Microsoft (email/auth)
+## Microsoft Outlook + Microsoft Calendar
 
-Microsoft is supported as an OAuth provider in two contexts:
+**Connection model:** OAuth 2.0 via the Microsoft identity platform; refresh tokens stored encrypted in the same `email_connections` table as Google (`provider = 'microsoft'`). The Outlook email address is written to `account_email` (and mirrored into the NOT-NULL `google_email` column). The frontend reads `account_email || google_email`.
 
-1. **SSO login** — `provider = 'microsoft'` in Supabase Auth (configured in `/auth`).
-2. **Email connection** — `email_connections.provider = 'microsoft'` is recognized (same table as Google); Microsoft-specific OAuth flow not yet fully implemented (Google is the active path).
+**Scopes:** `offline_access openid email profile` plus Graph `Mail.ReadWrite`, `Mail.Send`, `Calendars.Read`.
+
+**Tenant:** `MS_TENANT` env (default `common` — any work/school or personal account; set to a tenant GUID to restrict to one org).
+
+**Token rotation:** Microsoft rotates the refresh token on every refresh — consumers must persist the new `refresh_token` back to the connection row. Handled centrally in `_shared/ms-graph.ts` (`getMsAccessToken` returns `newRefreshToken`).
+
+**Edge functions:**
+
+| Function | What it does |
+|----------|-------------|
+| `outlook-oauth-start` | Initiates Microsoft OAuth (signs state via `gmail-crypto`, returns authorize URL) |
+| `outlook-oauth-callback` | Exchanges code at the MS token endpoint, fetches `/me` from Graph, stores encrypted refresh token in `email_connections` (`provider = 'microsoft'`) |
+
+**Shared helper:** `supabase/functions/_shared/ms-graph.ts` — `getMsAccessToken` (refresh w/ rotation), `createOutlookDraft` (`POST /me/messages`), `listOutlookCalendarEvents` (`calendarView`, paged, UTC).
+
+**Disconnect:** No dedicated edge function; `EmailConnectionCard` flips `is_active = false` locally (the refresh token is not revoked at Microsoft).
+
+**Azure app registration required:** redirect URI `https://<project-ref>.supabase.co/functions/v1/outlook-oauth-callback`; secrets `MS_CLIENT_ID`, `MS_CLIENT_SECRET`, optional `MS_TENANT`. State signing + token encryption reuse `GMAIL_ENCRYPTION_KEY`.
+
+**Status / parity gaps (vs Google):**
+- ✅ Connect / disconnect
+- ✅ BDR draft creation (`gmail-create-draft` is provider-aware)
+- ❌ Client Expansion + SSG status drafts (`gmail-create-draft-expansion`, `gmail-create-draft-ssg-status`) — still Google-only
+- ❌ Calendar + email sync into SSG (`ssg-sync-calendar`, `ssg-sync-email`) — still Google-only; `listOutlookCalendarEvents` helper exists but is not wired into the SSG rollup logic
+
+**SSO login** (separate from the email connection): Microsoft is also a Supabase Auth provider (`provider = 'azure'`) on `/auth` — see `handleSSOLogin` in `src/pages/Auth.tsx`.
 
 ---
 

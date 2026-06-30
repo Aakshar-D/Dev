@@ -15,5 +15,11 @@
 | [02-feature-modules.md](02-feature-modules.md) | Every feature module — route, problem, workflow, key tables |
 | [03-desks.md](03-desks.md) | Role-workspace subsystem and all 6 desks |
 | [04-data-model.md](04-data-model.md) | Full entity catalog by domain, RLS patterns |
-| [05-integrations.md](05-integrations.md) | HubSpot, Google, Gemini, Fathom, Ninety.io, AI/LLM map |
+| [05-integrations.md](05-integrations.md) | HubSpot, Google, Microsoft/Outlook, Gemini, Fathom, Ninety.io, AI/LLM map |
 | [06-mcp-and-ai.md](06-mcp-and-ai.md) | Hub-as-MCP-server, OAuth 2.1 AS, ~50 tools, admin management |
+
+## Change log
+
+| File | Covers |
+|------|--------|
+| [changes/2026-06-26-microsoft-email-integration.md](changes/2026-06-26-microsoft-email-integration.md) | Microsoft (Outlook) email connection + provider-aware BDR draft |
