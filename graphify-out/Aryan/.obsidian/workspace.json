@@ -11,10 +11,13 @@
             "id": "c89099a6815b67c5",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
-              "icon": "lucide-file",
-              "title": "New tab"
+              "type": "bases",
+              "state": {
+                "file": "Untitled.base",
+                "viewName": "Table"
+              },
+              "icon": "lucide-table",
+              "title": "Untitled"
             }
           }
         ]
@@ -70,7 +73,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -176,10 +180,11 @@
       "bases:Create new base": false
     }
   },
-  "active": "c89099a6815b67c5",
+  "active": "c3022a2a27baac38",
   "lastOpenFiles": [
-    "Untitled.md",
     "Untitled.base",
+    "Untitled",
+    "Untitled.md",
     "2026-06-29.md",
     "test",
     "Welcome.md",
