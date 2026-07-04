@@ -1,23 +1,20 @@
 {
   "main": {
-    "id": "9867b0a08dd82028",
+    "id": "0b592b0bf4ee9023",
     "type": "split",
     "children": [
       {
-        "id": "262fd2da29a83b1e",
+        "id": "f3e6a82eb6f05316",
         "type": "tabs",
         "children": [
           {
-            "id": "c89099a6815b67c5",
+            "id": "e8a695cd41735b70",
             "type": "leaf",
             "state": {
-              "type": "bases",
-              "state": {
-                "file": "Untitled 1.base",
-                "viewName": "Table"
-              },
-              "icon": "lucide-table",
-              "title": "Untitled 1"
+              "type": "graph",
+              "state": {},
+              "icon": "lucide-git-fork",
+              "title": "Graph view"
             }
           }
         ]
@@ -26,15 +23,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "c9ffe68cba9ef385",
+    "id": "c340950412ccd367",
     "type": "split",
     "children": [
       {
-        "id": "7df16d05e0dc2306",
+        "id": "c91f34efe9153d9a",
         "type": "tabs",
         "children": [
           {
-            "id": "9088e253b2526361",
+            "id": "dc94d31025f64693",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -47,7 +44,7 @@
             }
           },
           {
-            "id": "c3022a2a27baac38",
+            "id": "8a857cc05333fcfd",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -64,7 +61,7 @@
             }
           },
           {
-            "id": "3e1853b86375f232",
+            "id": "dbcdca80192bd3ac",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -80,15 +77,15 @@
     "width": 300
   },
   "right": {
-    "id": "7945bda6b19af2e3",
+    "id": "c01394d3d34b45ad",
     "type": "split",
     "children": [
       {
-        "id": "22bbba04147ba656",
+        "id": "8c12ec02574b7807",
         "type": "tabs",
         "children": [
           {
-            "id": "39b3486fa24917c8",
+            "id": "9b936e534f96430e",
             "type": "leaf",
             "state": {
               "type": "backlink",
@@ -106,7 +103,7 @@
             }
           },
           {
-            "id": "23a01adf056efe23",
+            "id": "821f676f2655d48d",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
@@ -119,7 +116,7 @@
             }
           },
           {
-            "id": "55d3655f9e2e2241",
+            "id": "853185afe4a926a7",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -134,7 +131,7 @@
             }
           },
           {
-            "id": "95634bec2ee4bbb3",
+            "id": "9d3fb5a21d542ff0",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -148,7 +145,7 @@
             }
           },
           {
-            "id": "2f01d65c61ee7e3d",
+            "id": "c174b1cadc58b9be",
             "type": "leaf",
             "state": {
               "type": "outline",
@@ -179,15 +176,10 @@
       "bases:Create new base": false
     }
   },
-  "active": "c89099a6815b67c5",
+  "active": "e8a695cd41735b70",
   "lastOpenFiles": [
-    "Untitled 1.base",
-    "Untitled.base",
-    "Untitled",
-    "Untitled.md",
-    "2026-06-29.md",
-    "test",
-    "Welcome.md",
-    "create a link.md"
+    "linkedalliance/node_modules/@tiptap/extension-heading/README.md",
+    "Untitled.canvas",
+    "graphify-out/GRAPH_REPORT.md"
   ]
 }
