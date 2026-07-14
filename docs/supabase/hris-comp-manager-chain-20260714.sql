@@ -32,7 +32,7 @@ create policy "hris comp read" on public.hris_compensation
   for select
   using (
     employee_id = auth.uid()
-    or has_permission(auth.uid(), 'desks.hris.comp')
-    or has_permission(auth.uid(), 'admin.access')
+    or public.has_permission(auth.uid(), 'desks.hris.comp')
+    or public.has_permission(auth.uid(), 'admin.access')
     or public.hris_in_management_chain(auth.uid(), employee_id)
   );
