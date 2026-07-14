@@ -178,6 +178,16 @@
   },
   "active": "e8a695cd41735b70",
   "lastOpenFiles": [
+    "linkedalliance/node_modules/tailwindcss-animate/README.md",
+    "docs/docs/api/Dispatcher.md",
+    "docs/docs/api",
+    "docs/docs",
+    "linkedalliance/supabase/migrations/20260703130000_firm_onboarding_desk_registration.sql",
+    "linkedalliance/supabase/migrations/20260703120000_firm_onboarding_foundation.sql",
+    "linkedalliance/src/lib/firmOnboarding.ts",
+    "linkedalliance/src/lib/firmOnboarding.test.ts",
+    "linkedalliance/src/components/desks/firm-onboarding/FirmOnboardingDeskContent.tsx",
+    "linkedalliance/src/components/desks/firm-onboarding",
     "linkedalliance/node_modules/@tiptap/extension-heading/README.md",
     "Untitled.canvas",
     "graphify-out/GRAPH_REPORT.md"
