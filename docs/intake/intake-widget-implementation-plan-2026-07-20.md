@@ -1604,6 +1604,20 @@ New intake widget + project_requests table; additive schema, no changes to exist
 
 ---
 
+### Task 10 (addendum 2026-07-20): hub-feature questions
+
+**Files:**
+- Modify: `supabase/migrations/20260726120000_project_requests.sql` (add `request_type` + `feature_answers` columns to the CREATE TABLE — migration still unapplied)
+- Modify: `src/lib/projectRequests.ts` + `src/lib/projectRequests.test.ts` (draft gains `requestType`/`featureAnswers`; hub_feature requires `problem`; payload maps `request_type` + `feature_answers`)
+- Modify: `src/components/intake/ProjectRequestForm.tsx` (type toggle default hub_feature + 5 conditional inputs per spec §8)
+- Modify: `src/components/intake/PendingProjectRequests.tsx` (badge + read-only answers on card and ApproveDialog)
+- Modify: `supabase/functions/project-request-notify/index.ts` (append escaped/truncated problem + urgency lines to email body for hub_feature)
+
+**Interfaces:**
+- `ProjectRequestDraft` gains `requestType: "hub_feature" | "other"` and `featureAnswers: { problem: string; users: string; location: string; success: string; urgency: string } | null`.
+- TDD: extend projectRequests tests — hub_feature missing problem → rejected; hub_feature with problem → valid; other → feature fields ignored.
+- Gate: lint + test + build; commit on feat/intake-widget; PR #279 reply comment.
+
 ## Self-review notes
 
 - **Spec coverage:** widget UX + rename (T3), ticket embed (T4), request form + full fields (T5), `project_requests` + RLS + approver functions (T1), approval/reject dialogs + shared createProject (T2, T7), admin approver setting (T8), notifications in-app+email approver / in-app requester (T5-T7), testing + QA (T2/T5 vitest, T9 prod QA). Out-of-scope items untouched.

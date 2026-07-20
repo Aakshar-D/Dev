@@ -132,6 +132,29 @@ this one function — one code path.
   reject (with reason) flows; notifications received; RLS — non-approver cannot
   see others' requests.
 
+## 8. Hub-feature questions (addendum 2026-07-20, approved)
+
+The request form gains a **request type toggle** — "Hub feature" (default) / "Other
+project". When Hub feature is selected, five questions render between description
+and template:
+
+| Question | Field | Required |
+|---|---|---|
+| What problem does it solve? | textarea | yes |
+| Who will use it? (roles/teams) | text | no |
+| Where in the hub does it belong? | text | no |
+| What does done look like? | textarea | no |
+| Urgency | select Low/Medium/High/Urgent | no |
+
+Storage: two columns on `project_requests` (same unapplied migration):
+`request_type text NOT NULL DEFAULT 'other' CHECK (IN ('hub_feature','other'))`
+and `feature_answers jsonb` (`{problem, users, location, success, urgency}`,
+null for "other"). Validation: hub_feature requires `problem`.
+
+Approver view: "Hub feature" badge + read-only answers list on the pending card
+and in the ApproveDialog. Notify email appends problem + urgency lines
+(escaped, truncated). Ships in PR #279.
+
 ## Key files
 
 - `src/components/FeedbackWidget.tsx` → `src/components/IntakeWidget.tsx`
