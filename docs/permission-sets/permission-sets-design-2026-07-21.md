@@ -183,6 +183,21 @@ Components:
 3. **`PermissionSetGroupsAdminTab.tsx`** — group cards + Sheet builder listing **permission sets as checkboxes** (name, description, key-count badge — not the key matrix), plus computed union preview: "Grants N unique permissions across M sets" with expandable read-only key list. Assignment UI identical to sets, writing `user_permission_set_group_assignments`.
 4. **`UserAccessPanel.tsx`** — mounted in the Admin user-edit dialog's Access tab (extracted as a component rather than growing the 98KB `Admin.tsx`). Shows current role (existing select), assigned sets and groups as removable badges + "Add set / Add group" comboboxes, and the user's direct grants — "everything this user can do and why" in one place. The single-role `updateRole` flow (dual-write to `profiles.role_id` + `user_role_assignments`) is untouched.
 
+## 6b. Mute switches (added 2026-07-23)
+
+`is_muted boolean NOT NULL DEFAULT false` on four tables, giving a reversible suspension at every level — records, keys, and notes are kept, unlike a revoke:
+
+| Level | Column on | Effect |
+|---|---|---|
+| Set | `permission_sets` | Set grants nothing anywhere — direct assignments AND via every group containing it |
+| Group | `permission_set_groups` | Group grants nothing to any assignee; member sets unaffected elsewhere |
+| Set assignment | `user_permission_set_assignments` | Silences the set for that one user only |
+| Group assignment | `user_permission_set_group_assignments` | Silences the group for that one user only |
+
+Resolver: both `get_user_permissions` arms and `has_permission` branches carry `NOT ... is_muted` predicates at each level (set-level check joins `permission_sets` in both the direct and group paths). A key grants only if every level on its path is unmuted; other paths to the same key (role, direct grant, another unmuted set) are unaffected.
+
+UI: mute/unmute toggle (VolumeX/Volume2) on set and group cards, on per-assignee rows inside the builder sheets, and on the badges in the user Access panel; muted items show a destructive "Muted" badge / strike-through. All toggles write `logActivity` with `is_muted` metadata.
+
 ## 7. Edge cases
 
 | Case | Decision |
